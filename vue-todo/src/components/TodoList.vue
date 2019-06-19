@@ -26,7 +26,7 @@ export default {
             // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
             console.log('remove items');
             localStorage.removeItem(todoItem);
-            this.todoItems.splice(index, 1); // 배열에서 몇번째 인덱스로부터 몇개 지운다.
+            this.todoItems.splice(index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
         }
     },
     // created : vue instance가 생성되자마자 호출됨 (vue lifecycle hook)
