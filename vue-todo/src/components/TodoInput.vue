@@ -18,12 +18,16 @@ export default {
             newTodoItem: ""
         }
     },
+    // 사용자정의 function들은 methods 안에 정의한다.
     methods: {
         addTodo: function(){
-            // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
-            console.log(this.newTodoItem);
-            localStorage.setItem(this.newTodoItem, this.newTodoItem);
-            this.clearInput();
+            if(this.newTodoItem !== ''){
+                var obj = {completed: false, item: this.newTodoItem};
+                // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
+                console.log(this.newTodoItem);
+                localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+                this.clearInput();
+            }
         },
         clearInput: function(){
             // input창 값 초기화

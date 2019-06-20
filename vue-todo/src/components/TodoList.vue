@@ -2,8 +2,11 @@
     <div>
         <ul>
             <!-- v-for문을 돌려서 값을 보여준다. v-bind:key는 v-for문을 돌릴때 키를 지정하는것 -->
-            <li class="shadow" v-for="(todoItem, index) in todoItems" v-bind:key="todoItem">
-                {{ todoItem }}
+            <li class="shadow" v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item">
+                <!-- v-bind:class="{클래스명: vueJS변수}" 여기서 변수가 true일때 클래스가 적용됨 -->
+                <i class="fas fa-check checkBtn" v-bind:class="{checkBtnCompleted: todoItem.toggleComplete}"
+                 v-on:click="toggleComplete(todoItem, index)"></i>
+                <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
                 <!-- 삭제버튼에 onclick이벤트로 removeTodo()를 호출 -->
                 <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
                     <i class="fas fa-trash-alt"></i>
@@ -22,11 +25,17 @@ export default {
     },
     // 사용자정의 function들은 methods 안에 정의한다.
     methods: {
+        // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
         removeTodo: function(todoItem, index){
-            // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
             console.log('remove items');
             localStorage.removeItem(todoItem);
             this.todoItems.splice(index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
+        },
+        // 할일체크버튼 클릭시 반대값으로 바꿔주고, 로컬스토리지 값을 수정한다.
+        toggleComplete: function(todoItem, index){
+            console.log(todoItem.item + ', ' + index);
+            todoItem.completed = !todoItem.completed;
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         }
     },
     // created : vue instance가 생성되자마자 호출됨 (vue lifecycle hook)
@@ -34,7 +43,7 @@ export default {
         if(localStorage.length > 0){
             for(var i=0; i<localStorage.length; i++){
                 if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
-                    this.todoItems.push(localStorage.key(i));
+                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
                 }
             }
         }
@@ -42,7 +51,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 ul {
     list-style-type: none;
     padding-left: 0px;
