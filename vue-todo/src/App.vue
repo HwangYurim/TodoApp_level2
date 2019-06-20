@@ -8,7 +8,7 @@
     <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
     <TodoFooter></TodoFooter>
   </div>
-</template>
+</template> 
 
 <script>
 // 컴포넌트들을 임포트한다.
