@@ -15,7 +15,7 @@
 export default {
     data: function(){
         return {
-            newTodoItem: ""
+            newTodoItem: "" 
         }
     },
     // 사용자정의 function들은 methods 안에 정의한다.
