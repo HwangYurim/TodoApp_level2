@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
+    <!-- TodoInput 컴포넌트에서 addTodoItem 이벤트가 발생되면 addOneItem 메소드를 실행한다. -->
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <!-- 하위 컴포넌트에 현재 위치에서 가지고있는 todoItems 데이터변수를 propsdata 라는 props로 바인딩한다.
+         TodoList 컴포넌트에서 removeItem 이벤트가 발생되면 removeOneItem 메소드를 실행한다. -->
+    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
     <TodoFooter></TodoFooter>
   </div>
 </template>
@@ -16,6 +19,36 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 
 export default {
+  data: function(){
+        return {
+            todoItems: []
+        }
+  },
+  methods: {
+    // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
+    addOneItem: function(todoItem){
+      var obj = {completed: false, item: todoItem};
+      // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
+      console.log(todoItem);
+      localStorage.setItem(todoItem, JSON.stringify(obj));
+      this.todoItems.push(obj);
+    },
+    removeOneItem: function(todoItem, index){
+      console.log('remove items');
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
+    }
+  },
+  // created : vue instance가 생성되자마자 호출됨 (vue lifecycle hook)
+  created: function(){
+      if(localStorage.length > 0){
+          for(var i=0; i<localStorage.length; i++){
+              if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
+                  this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+              }
+          }
+      }
+  },
   components: {
     // 컴포넌트 태그명 : 컴포넌트 내용
     'TodoHeader' : TodoHeader,

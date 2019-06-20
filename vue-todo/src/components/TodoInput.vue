@@ -22,10 +22,9 @@ export default {
     methods: {
         addTodo: function(){
             if(this.newTodoItem !== ''){
-                var obj = {completed: false, item: this.newTodoItem};
-                // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
-                console.log(this.newTodoItem);
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+                // eventBus 실행하기 : $emit('이벤트명', '인자1', '인자2', ...);
+                // 상위컴포넌트로 addTodoItem 이벤트버스를 발생시키고(emit) this.newTodoItem을 보낸다.
+                this.$emit('addTodoItem', this.newTodoItem);
                 this.clearInput();
             }
         },
