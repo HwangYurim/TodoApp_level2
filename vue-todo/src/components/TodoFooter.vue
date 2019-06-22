@@ -1,5 +1,6 @@
 <template>
     <div class="clearAllContainer">
+        <!-- 버튼 클릭시 clearTodo 메소드 실행 -->
         <span class="clearAllBtn" v-on:click="clearTodo">Clear All</span>
     </div>
 </template>
@@ -7,9 +8,10 @@
 <script>
 export default {
     methods: {
+        // clearTodo 메소드 실행시 clearAll 이벤트 발생
+        // App.vue에서 TodoFooter 컴포넌트에서 clearAll 발생시 clearAllItem 메소드 실행 (v-on:clearAll="clearAllItem")
         clearTodo: function(){
-            localStorage.clear();
-            
+            this.$emit('clearAll');
         }
     }
 }

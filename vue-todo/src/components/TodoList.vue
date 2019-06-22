@@ -5,7 +5,7 @@
             <li class="shadow" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
                 <!-- v-bind:class="{클래스명: vueJS변수}" 여기서 변수가 true일때 클래스가 적용됨 -->
                 <i class="fas fa-check checkBtn" v-bind:class="{checkBtnCompleted: todoItem.toggleComplete}"
-                 v-on:click="toggleComplete(todoItem, index)"></i>
+                    v-on:click="toggleComplete(todoItem, index)"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
                 <!-- 삭제버튼에 onclick이벤트로 removeTodo()를 호출 -->
                 <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
@@ -24,13 +24,13 @@ export default {
     methods: {
         // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
         removeTodo: function(todoItem, index){
+            // removeItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
             this.$emit('removeItem', todoItem, index);
         },
         // 할일체크버튼 클릭시 반대값으로 바꿔주고, 로컬스토리지 값을 수정한다.
         toggleComplete: function(todoItem, index){
-            console.log(todoItem.item + ', ' + index);
-            todoItem.completed = !todoItem.completed;
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+            // toggleItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
+            this.$emit('toggleItem', todoItem, index);
         }
     }
 }
