@@ -10,7 +10,7 @@ export default {
     methods: {
         // clearTodo 메소드 실행시 clearAll 이벤트 발생
         // App.vue에서 TodoFooter 컴포넌트에서 clearAll 발생시 clearAllItem 메소드 실행 (v-on:clearAll="clearAllItem")
-        clearTodo: function(){
+        clearTodo(){
             this.$emit('clearAll');
         }
     }

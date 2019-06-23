@@ -27,7 +27,7 @@
 import Modal from "./common/Modal.vue";
 
 export default {
-  data: function() {
+  data() {
     return {
       newTodoItem: "",
       showModal: false
@@ -35,17 +35,18 @@ export default {
   },
   // 사용자정의 function들은 methods 안에 정의한다.
   methods: {
-    addTodo: function() {
+    addTodo() {
       if (this.newTodoItem !== "") {
         // eventBus 실행하기 : $emit('이벤트명', '인자1', '인자2', ...);
         // 상위컴포넌트로 addTodoItem 이벤트버스를 발생시키고(emit) this.newTodoItem을 보낸다.
+        const item = this.newTodoItem.trim();
         this.$emit("addTodoItem", this.newTodoItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
       }
     },
-    clearInput: function() {
+    clearInput() {
       // input창 값 초기화
       this.newTodoItem = "";
     }
@@ -53,7 +54,9 @@ export default {
   // TodoInput 컴포넌트의 내장 컴포넌트를 등록한다.
   components: {
     // Modal이라는 컴포넌트명으로 위에서 임포트한 Modal을 등록.
-    Modal: Modal
+    // Modal: Modal
+    // ES6 - 속성명과 값 명이 동일할때 아래와 같이 축약할 수 있다.
+    Modal
   }
 };
 </script>

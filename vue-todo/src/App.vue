@@ -24,38 +24,38 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 
 export default {
-  data: function(){ 
+  data(){ 
         return {
             todoItems: []
         }
   },
   methods: {
     // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
-    addOneItem: function(todoItem){
+    addOneItem(todoItem){
       const obj = {completed: false, item: todoItem};
       // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
       console.log(todoItem);
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
-    removeOneItem: function(todoItem, index){
+    removeOneItem(todoItem, index){
       console.log('remove items');
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
     },
-    toggleOneItem: function(todoItem, index){
+    toggleOneItem(todoItem, index){
       console.log(todoItem.item + ', ' + index);
       // todoItem.completed = !todoItem.completed;
       this.todoItems[index].completed = !this.todoItems[index].completed;
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
-    clearAllItem: function(){
+    clearAllItem(){
       localStorage.clear();
       this.todoItems = [];
     }
   },
   // created : vue instance가 생성되자마자 호출됨 (vue lifecycle hook)
-  created: function(){
+  created(){
       if(localStorage.length > 0){
           for(let i=0; i<localStorage.length; i++){
               if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
@@ -66,10 +66,15 @@ export default {
   },
   components: {
     // 컴포넌트 태그명 : 컴포넌트 내용
-    'TodoHeader' : TodoHeader,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList,
-    'TodoFooter' : TodoFooter
+    // 'TodoHeader' : TodoHeader,
+    // 'TodoInput' : TodoInput,
+    // 'TodoList' : TodoList,
+    // 'TodoFooter' : TodoFooter
+    // ES6 - 속성명과 값 명이 동일할때 아래와 같이 축약할 수 있다.
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter
   }
 }
 </script>
