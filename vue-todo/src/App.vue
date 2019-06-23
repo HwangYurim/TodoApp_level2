@@ -32,7 +32,7 @@ export default {
   methods: {
     // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
     addOneItem: function(todoItem){
-      var obj = {completed: false, item: todoItem};
+      const obj = {completed: false, item: todoItem};
       // addTodo 메소드 실행시 this(이 뷰 객체)의 newTodoItem 변수를 콘솔에 찍음
       console.log(todoItem);
       localStorage.setItem(todoItem, JSON.stringify(obj));
@@ -57,7 +57,7 @@ export default {
   // created : vue instance가 생성되자마자 호출됨 (vue lifecycle hook)
   created: function(){
       if(localStorage.length > 0){
-          for(var i=0; i<localStorage.length; i++){
+          for(let i=0; i<localStorage.length; i++){
               if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
                   this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
               }
