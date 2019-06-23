@@ -27,12 +27,12 @@ export default {
   // 사용자정의 function들은 methods 안에 정의한다.
   methods: {
     // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
-    removeTodo: function(todoItem, index) {
+    removeTodo(todoItem, index) {
       // removeItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
       this.$emit("removeItem", todoItem, index);
     },
     // 할일체크버튼 클릭시 반대값으로 바꿔주고, 로컬스토리지 값을 수정한다.
-    toggleComplete: function(todoItem, index) {
+    toggleComplete(todoItem, index) {
       // toggleItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
       this.$emit("toggleItem", todoItem, index);
     }
