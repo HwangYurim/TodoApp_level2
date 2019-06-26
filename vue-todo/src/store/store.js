@@ -25,6 +25,11 @@ export const store = new Vuex.Store({
         headerText: 'TODO it!',
         todoItems: storage.fetch()
     },
+    getters: {
+        getTodoItems(state){
+            return state.todoItems;
+        }
+    },
     mutations: {
         // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
         addOneItem(state, todoItem){

@@ -5,8 +5,8 @@
          즉, css에서 트랜지션그룹네임값-enter-active 로 클래스를 설정해주면 된다. -->
     <transition-group name="list" tag="ul"> <!-- <ul>로 html이 생성된다. -->
       <!-- v-for문을 돌려서 값을 보여준다. v-bind:key는 v-for문을 돌릴때 키를 지정하는것.
-           vuex의 데이터를 가져와서 for loop -->
-      <li class="shadow" v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem.item">
+           computed에서 todoItems() 로 정의한 function은 템플릿에서 todoItems 로 쓸 수 있다.-->
+      <li class="shadow" v-for="(todoItem, index) in this.todoItems" v-bind:key="todoItem.item">
         <!-- v-bind:class="{클래스명: vueJS변수}" 여기서 변수가 true일때 클래스가 적용됨 -->
         <i class="fas fa-check checkBtn"
           v-bind:class="{checkBtnCompleted: todoItem.completed}"
@@ -44,6 +44,13 @@ export default {
         todoItem,
         index
       });
+    }
+  },
+  // 연산식은 템플릿안에 넣지 않고 computed 안에 정의한다.
+  computed: {
+    todoItems(){
+      // computed에서 todoItems() 로 정의한 function은 템플릿에서 todoItems 로 쓸 수 있다.
+      return this.$store.getters.getTodoItems;
     }
   }
 };
