@@ -9,7 +9,7 @@
       <li class="shadow" v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem.item">
         <!-- v-bind:class="{클래스명: vueJS변수}" 여기서 변수가 true일때 클래스가 적용됨 -->
         <i class="fas fa-check checkBtn"
-          v-bind:class="{checkBtnCompleted: todoItem.toggleComplete}"
+          v-bind:class="{checkBtnCompleted: todoItem.completed}"
           v-on:click="toggleComplete(todoItem, index)"></i>
         <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
         <!-- 삭제버튼에 onclick이벤트로 removeTodo()를 호출 -->
@@ -23,19 +23,27 @@
 
 <script>
 export default {
-  // 부모컴포넌트에서 받아올 props 정의
-  props: ["propsdata"],
   // 사용자정의 function들은 methods 안에 정의한다.
+  // methods 는 vuex store의 mutations와 같다.
   methods: {
     // 삭제 메소드: 로컬스토리지에서 해당 값을 삭제하고 목록에서 값 삭제
     removeTodo(todoItem, index) {
-      // removeItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
-      this.$emit("removeItem", todoItem, index);
+      // mutations 동작 - removeOneItem을 호출하고 todoItem, index를 넘겨줌
+      // this.$store.commit('removeOneItem', todoItem, index); 이렇게 매개변수를 늘리는것보다 객체로 넘겨서 payload로 받는다.
+      this.$store.commit('removeOneItem', {
+        todoItem,
+        index
+      });
     },
     // 할일체크버튼 클릭시 반대값으로 바꿔주고, 로컬스토리지 값을 수정한다.
     toggleComplete(todoItem, index) {
-      // toggleItem이라는 이벤트를 발생시키고 todoItem, index를 넘긴다.
-      this.$emit("toggleItem", todoItem, index);
+      console.log(todoItem + ', ' + index);
+      // mutations 동작 - toggleOneItem을 호출하고 todoItem, index를 넘겨줌
+      // this.$store.commit('toggleOneItem', todoItem, index); 이렇게 매개변수를 늘리는것보다 객체로 넘겨서 payload로 받는다.
+      this.$store.commit('toggleOneItem', {
+        todoItem,
+        index
+      });
     }
   }
 };

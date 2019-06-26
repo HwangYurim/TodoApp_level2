@@ -24,5 +24,31 @@ export const store = new Vuex.Store({
     state: {
         headerText: 'TODO it!',
         todoItems: storage.fetch()
+    },
+    mutations: {
+        // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
+        addOneItem(state, todoItem){
+            const obj = {completed: false, item: todoItem};
+            console.log(todoItem);
+            localStorage.setItem(todoItem, JSON.stringify(obj));
+            this.state.todoItems.push(obj);
+        },
+        // removeOneItem(state, todoItem, index){
+        removeOneItem(state, payload){
+            console.log('remove items');
+            localStorage.removeItem(payload.todoItem.item);
+            this.state.todoItems.splice(payload.index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
+          },
+        // toggleOneItem(state, todoItem, index){
+        toggleOneItem(state, payload){
+            console.log(payload.todoItem.item + ', ' + payload.index);
+            // console.log(this.state.todoItems[0]);
+            this.state.todoItems[payload.index].completed = !this.state.todoItems[payload.index].completed;
+            localStorage.setItem(payload.todoItem.item, JSON.stringify(payload.todoItem));
+        },
+        clearAllItem(){
+            localStorage.clear();
+            this.state.todoItems = [];
+        }
     }
 });
