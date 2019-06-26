@@ -1,13 +1,20 @@
 <template>
     <div>
         <!-- <h1>TODO it!</h1> -->
-        <h1>{{ this.$store.state.headerText }}</h1>
+        <!-- js에서 computed 안에 정의한 vuex helpers mapState 로 값을 꺼내옴 -->
+        <h1>{{ this.headerText }}</h1>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     // js script
+    computed: {
+        // vuex helpers - mapState 적용
+        ...mapState(['headerText'])
+    }
 }
 </script>
 
