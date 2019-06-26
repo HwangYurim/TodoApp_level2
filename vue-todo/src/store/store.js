@@ -41,6 +41,7 @@ export const store = new Vuex.Store({
         // removeOneItem(state, todoItem, index){
         removeOneItem(state, payload){
             console.log('remove items');
+            console.log(payload.todoItem.item);
             localStorage.removeItem(payload.todoItem.item);
             this.state.todoItems.splice(payload.index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
           },
