@@ -2,6 +2,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+// ./getters 경로의 getters 파일 안에 있는 모든 function을 임포트한다.
+import * as getters from './getters'
+import * as mutations from './mutations'
+
 // use : 뷰 객체에 전역으로 Vuex를 사용할 수 있도록 등록한다.
 Vue.use(Vuex);
 
@@ -25,36 +29,9 @@ export const store = new Vuex.Store({
         headerText: 'TODO it!',
         todoItems: storage.fetch()
     },
-    getters: {
-        getTodoItems(state){
-            return state.todoItems;
-        }
-    },
-    mutations: {
-        // addOneItem은 todoInput 컴포넌트에서 발생시 할일값을 올려보내기 때문에 todoItem으로 받는다.
-        addOneItem(state, todoItem){
-            const obj = {completed: false, item: todoItem};
-            console.log(todoItem);
-            localStorage.setItem(todoItem, JSON.stringify(obj));
-            this.state.todoItems.push(obj);
-        },
-        // removeOneItem(state, todoItem, index){
-        removeOneItem(state, payload){
-            console.log('remove items');
-            console.log(payload.todoItem.item);
-            localStorage.removeItem(payload.todoItem.item);
-            this.state.todoItems.splice(payload.index, 1); // 배열에서 index번째 인덱스로부터 1개 지운다.
-          },
-        // toggleOneItem(state, todoItem, index){
-        toggleOneItem(state, payload){
-            console.log(payload.todoItem.item + ', ' + payload.index);
-            // console.log(this.state.todoItems[0]);
-            this.state.todoItems[payload.index].completed = !this.state.todoItems[payload.index].completed;
-            localStorage.setItem(payload.todoItem.item, JSON.stringify(payload.todoItem));
-        },
-        clearAllItem(){
-            localStorage.clear();
-            this.state.todoItems = [];
-        }
-    }
+    // getters: getters,
+    // mutations: mutations
+    // 임포트한 getters와 mutations를 담는다. 객체명과 속성명이같을 경우 생략가능
+    getters,
+    mutations
 });
